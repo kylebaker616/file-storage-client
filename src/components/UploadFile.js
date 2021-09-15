@@ -2,29 +2,12 @@ import React, { Fragment, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { upload } from '../api/files'
-import FormData from 'form-data'
-// function UploadFile (props) {
-//   const handleChange = (event) => {
-//     console.log(event.target.files)
-//   }
-
-//   render()
-//   return (
-//     <Fragment>
-//       <Form.Group controlId='formFile' className='mb-3'>
-//         <Form.Label>Upload file here</Form.Label>
-//         <Form.Control type='file' onchange={this.handleChange}/>
-//         <Button variant='primary' type='submit'>Submit</Button>
-//       </Form.Group>
-//     </Fragment>
-//   )
-// }
-// export default withRouter(UploadFile)
-// import React from 'react'
+import { uploadFile } from '../api/files'
+import { FormData } from 'formdata-node'
 
 function UploadFile () {
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState({})
+  const [upload, setUpload] = useState({})
   const handleChange = (event) => {
     console.log(event.target.files)
     setSelected(event.target.files[0])
@@ -35,14 +18,17 @@ function UploadFile () {
     console.log('hello', event.target)
     const data = new FormData()
     // upload is the key that the api is expecting, value is the selected file set in state
-    data.append('upload', selected)
-    upload(data)
-      .then(console.log)
-      .catch(console.error)
+    data.set('upload', selected)
+    console.log(data, 'ooo')
+    uploadFile(data)
+      .then(res => setUpload(res.data.uploadDoc))
+      .catch(console.error + 'oops')
   }
 
   return (
     <Fragment>
+      {/* ternary operator displays the image that was just uploaded by setUploaded after the axios call */}
+      {upload.url ? (<img className="display-image" alt={upload.url} src={upload.url}/>) : '' }
       <form onSubmit={handleSubmit}>
         <Form.Group controlId='formFile' className='mb-3'>
           <Form.Label>Upload file here</Form.Label>

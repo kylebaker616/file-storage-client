@@ -1,10 +1,10 @@
 import apiUrl from '../apiConfig'
 import axios from 'axios'
 
-export const upload = (data) => {
+export const uploadFile = (fileData) => {
   return axios({
     url: apiUrl + '/uploads',
     method: 'POST',
-    data: data
+    data: fileData
   })
 }
