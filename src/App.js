@@ -10,8 +10,7 @@ import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import UploadFile from './components/UploadFile'
 
 class App extends Component {
   constructor (props) {
@@ -88,11 +87,10 @@ class App extends Component {
               <ChangePassword msgAlert={this.msgAlert} user={user} />
             )}
           />
-          <Form.Group controlId='formFile' className='mb-3'>
-            <Form.Label>Upload file here</Form.Label>
-            <Form.Control type='file' />
-            <Button variant="primary" type="submit">Submit</Button>
-          </Form.Group>
+          <Route
+            exact path='/upload'
+            render={() => (<UploadFile/>)}
+          />
         </main>
       </Fragment>
     )
