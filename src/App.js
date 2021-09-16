@@ -87,9 +87,11 @@ class App extends Component {
               <ChangePassword msgAlert={this.msgAlert} user={user} />
             )}
           />
-          <Route
+          <AuthenticatedRoute
             exact path='/upload'
-            render={() => (<UploadFile/>)}
+            user={user}
+            render={() => (
+              <UploadFile msgAlert={this.msgAlert} user={user}/>)}
           />
         </main>
       </Fragment>
