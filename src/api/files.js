@@ -20,3 +20,13 @@ export const showUploads = (user) => {
     }
   })
 }
+export const deleteFile = (id, key, user) => {
+  return axios({
+    url: apiUrl + '/uploads/' + id,
+    method: 'DELETE',
+    data: { data: key },
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }
+  })
+}
