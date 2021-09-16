@@ -11,3 +11,12 @@ export const uploadFile = (fileData, user) => {
     }
   })
 }
+export const showUploads = (user) => {
+  return axios({
+    url: apiUrl + '/uploads',
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }
+  })
+}

@@ -11,6 +11,7 @@ import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
 import UploadFile from './components/UploadFile'
+import Uploads from './components/Uploads'
 
 class App extends Component {
   constructor (props) {
@@ -88,10 +89,16 @@ class App extends Component {
             )}
           />
           <AuthenticatedRoute
-            exact path='/upload'
+            exact
+            path='/upload'
             user={user}
-            render={() => (
-              <UploadFile msgAlert={this.msgAlert} user={user}/>)}
+            render={() => <UploadFile msgAlert={this.msgAlert} user={user} />}
+          />
+          <AuthenticatedRoute
+            exact
+            path='/uploads'
+            user={user}
+            render={() => <Uploads msgAlert={this.msgAlert} user={user} />}
           />
         </main>
       </Fragment>
