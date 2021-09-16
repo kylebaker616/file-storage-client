@@ -10,6 +10,7 @@ import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
+import UploadFile from './components/UploadFile'
 
 class App extends Component {
   constructor (props) {
@@ -44,8 +45,8 @@ class App extends Component {
 
     return (
       <Fragment>
-	      <Header user={user} />
-	      {msgAlerts.map((msgAlert) => (
+        <Header user={user} />
+        {msgAlerts.map((msgAlert) => (
           <AutoDismissAlert
             key={msgAlert.id}
             heading={msgAlert.heading}
@@ -55,8 +56,8 @@ class App extends Component {
             deleteAlert={this.deleteAlert}
           />
         ))}
-	      <main className='container'>
-	        <Route
+        <main className='container'>
+          <Route
             path='/sign-up'
             render={() => (
               <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
@@ -85,6 +86,10 @@ class App extends Component {
             render={() => (
               <ChangePassword msgAlert={this.msgAlert} user={user} />
             )}
+          />
+          <Route
+            exact path='/upload'
+            render={() => (<UploadFile/>)}
           />
         </main>
       </Fragment>
