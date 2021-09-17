@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { showUploads, deleteFile } from '../api/files'
 import { withRouter } from 'react-router-dom'
 import { Button, Card } from 'react-bootstrap'
+import fileDownload from 'js-file-download'
 
 class Uploads extends Component {
   constructor (props) {
@@ -75,9 +76,11 @@ class Uploads extends Component {
 				upload.mimetype === 'image.jpg'
 	    ) {
 	      upload.thumbnail = upload.url
+	      upload.folder = 'images'
 	    } else {
 	      upload.thumbnail =
 					'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'
+	      upload.folder = 'files'
 	    }
 	  })
 	  // This is what prevents the "cannot read property map of undefined" or other similar errors because on the first render, `movies` state will be `null`
@@ -90,7 +93,10 @@ class Uploads extends Component {
 	    uploadsJsx = 'Loading...'
 	  } else {
 	    uploadsJsx = uploads.map((upload) => (
-	      <Card key={upload.id} style={{ width: '18rem' }}>
+	      <Card
+	        className={upload.folder}
+	        key={upload.id}
+	        style={{ width: '18rem' }}>
 	        <Card.Img
 	          variant='top'
 	          style={{ objectFit: 'cover' }}
@@ -106,6 +112,14 @@ class Uploads extends Component {
 	          }}>
 							Download file
 	          </Button>
+	          <Button
+	            variant='danger'
+	            onClick={() => {
+	              fileDownload(upload.url)
+	            }}>
+							Download file
+	          </Button>
+	          <a href={upload.url} download={upload.url}>Down</a>
 	          <Button
 	            variant='danger'
 	            data-id={upload._id}
