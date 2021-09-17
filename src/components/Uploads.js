@@ -56,6 +56,11 @@ class Uploads extends Component {
 	    )
 	}
 
+	handleSave = (url) => {
+	  console.log(url)
+	//   FileSaver.saveAs(url)
+	}
+
 	render () {
 	  const cardContainerLayout = {
 	    display: 'flex',
@@ -94,7 +99,13 @@ class Uploads extends Component {
 	        />
 	        <Card.Body>
 	          <Card.Title>{upload.createdAt}</Card.Title>
-	          {/* <Card.Text>{movie.description}</Card.Text> */}
+
+	          <Button variant='success' onClick={() => {
+	            const win = window.open(upload.url, '_blank')
+	            win.focus()
+	          }}>
+							Download file
+	          </Button>
 	          <Button
 	            variant='danger'
 	            data-id={upload._id}
