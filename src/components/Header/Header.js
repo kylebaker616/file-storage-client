@@ -18,6 +18,9 @@ const authenticatedOptions = (
     <NavLink to='/uploads' className='nav-link'>
 			My files
     </NavLink>
+    <NavLink to='/add' className='nav-link'>
+			Add friends
+    </NavLink>
   </Fragment>
 )
 
@@ -43,7 +46,7 @@ const Header = ({ user }) => (
     <Navbar.Collapse id='basic-navbar-nav'>
       <Nav className='ml-auto'>
         {user && (
-          <span className='navbar-text mr-2'>Welcome, {user.email}</span>
+          <span className='navbar-text mr-2'>Welcome, {user.username}</span>
         )}
         {alwaysOptions}
         {user ? authenticatedOptions : unauthenticatedOptions}

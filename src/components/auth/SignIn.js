@@ -12,7 +12,7 @@ class SignIn extends Component {
     super(props)
 
     this.state = {
-      email: '',
+      username: '',
       password: ''
     }
   }
@@ -28,6 +28,7 @@ onSignIn = (event) => {
   const { msgAlert, history, setUser } = this.props
 
   signIn(this.state)
+    // .then((res) => console.log(res.data.user))
     .then((res) => setUser(res.data.user))
     .then(() =>
       msgAlert({
@@ -38,7 +39,7 @@ onSignIn = (event) => {
     )
     .then(() => history.push('/'))
     .catch((error) => {
-      this.setState({ email: '', password: '' })
+      this.setState({ username: '', password: '' })
       msgAlert({
         heading: 'Sign In Failed with error: ' + error.message,
         message: signInFailure,
@@ -48,7 +49,7 @@ onSignIn = (event) => {
 }
 
 render () {
-  const { email, password } = this.state
+  const { username, password } = this.state
 
   return (
     <div className='row'>
@@ -56,13 +57,13 @@ render () {
         <h3>Sign In</h3>
         <Form onSubmit={this.onSignIn}>
           <Form.Group controlId='email'>
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>Username</Form.Label>
             <Form.Control
               required
-              type='email'
-              name='email'
-              value={email}
-              placeholder='Enter email'
+              type='text'
+              name='username'
+              value={username}
+              placeholder='Enter username'
               onChange={this.handleChange}
             />
           </Form.Group>
