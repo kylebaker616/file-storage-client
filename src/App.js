@@ -13,6 +13,7 @@ import ChangePassword from './components/auth/ChangePassword'
 import UploadFile from './components/UploadFile'
 import Uploads from './components/Uploads'
 import AddFriends from './components/Friends/AddFriends'
+import Requests from './components/Friends/Requests'
 
 class App extends Component {
   constructor (props) {
@@ -104,7 +105,12 @@ class App extends Component {
           <AuthenticatedRoute
             path='/add'
             user={user}
-            render={() => <AddFriends msgAlert={this.msgAlert} user={user}/>}
+            render={() => <AddFriends msgAlert={this.msgAlert} user={user} />}
+          />
+          <AuthenticatedRoute
+            path='/requests'
+            user={user}
+            render={() => <Requests msgAlert={this.msgAlert} user={user} setUser={this.setUser} />}
           />
         </main>
       </Fragment>

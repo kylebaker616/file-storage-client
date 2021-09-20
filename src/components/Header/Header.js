@@ -21,6 +21,9 @@ const authenticatedOptions = (
     <NavLink to='/add' className='nav-link'>
 			Add friends
     </NavLink>
+    <NavLink to='/requests' className='nav-link'>
+			Requests
+    </NavLink>
   </Fragment>
 )
 

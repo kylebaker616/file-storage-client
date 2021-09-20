@@ -15,15 +15,54 @@ export const findFriend = (data, user) => {
   })
 }
 
-export const addFriend = (recipient, user) => {
+export const addFriend = (data, user) => {
   return axios({
     url: apiUrl + '/requests',
     method: 'POST',
     data: {
       request: {
-        recipient: recipient.recipient,
-        sender: user.id
+        recipient: data,
+        sender: user._id
       }
+    },
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }
+  })
+}
+export const findRequester = (data, user) => {
+  return axios({
+    url: apiUrl + '/userrequests',
+    method: 'POST',
+    data: {
+      sender: { id: data }
+    },
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }
+  })
+}
+export const acceptRequest = (data, user) => {
+  return axios({
+    url: apiUrl + '/friends',
+    method: 'POST',
+    data: {
+      friend: { potentialFriend: data }
+    },
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }
+  })
+}
+export const removeRequest = (data, user) => {
+  return axios({
+    url: apiUrl + '/requests/' + user._id,
+    method: 'DELETE',
+    data: {
+      request: { id: data }
+    },
+    headers: {
+      Authorization: `Bearer ${user.token}`
     }
   })
 }

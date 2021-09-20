@@ -3,15 +3,16 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Button, Form, Row, Col } from 'react-bootstrap'
-import { findFriend } from '../../api/friends'
+import { findFriend, addFriend } from '../../api/friends'
 
 class AddFriends extends Component {
   constructor (props) {
     super(props)
     this.state = {
       recipient: '',
-      recipientName: '',
-      foundUser: ''
+      //   recipientName: '',
+      foundUser: '',
+      userFound: false
     }
   }
 
@@ -32,15 +33,18 @@ class AddFriends extends Component {
 	  })
 
 	onSearch = (event) => {
-	  console.log(this.state.recipient, 'BBB', this.props.user)
-	  console.log('AAAAA')
+	//   console.log(this.state.recipient, 'BBB', this.props.user)
+	//   console.log('AAAAA')
+	  console.log(this.props.user)
 	  event.preventDefault()
-	  //   this.setState({ recipientName: this.state.recipient })
+	  this.setState({ recipientName: this.state.recipient })
 	  findFriend(this.state, this.props.user)
 	    .then((response) => {
 	      console.log(response)
 	      this.setState({
-	        foundUser: response.data.user
+	        foundUser: response.data.user,
+	        recipient: '',
+	        userFound: true
 	      })
 	    })
 	    .catch((error) => {
@@ -53,12 +57,20 @@ class AddFriends extends Component {
 	    })
 	}
 
-	render () {
-	  const potentialFriend = this.state.recipient
-	  console.log(potentialFriend)
+    onClick = (event) => {
+      event.preventDefault()
+      const wantedFriend = event.target.attributes.getNamedItem('data-user').value
+      console.log(wantedFriend)
+      addFriend(wantedFriend, this.props.user)
+        .then(res => console.log(res))
+    }
+
+    render () {
+      //   const potentialFriend = this.state.recipient
+      //   console.log(potentialFriend, 'aa')
 	  return (
 	    <>
-	      <Form id="find-friend" onSubmit={this.onSearch}>
+	      <Form id='find-friend' onSubmit={this.onSearch}>
 	        <Row>
 	          <Col xs={7}>
 	            <Form.Control
@@ -75,8 +87,15 @@ class AddFriends extends Component {
 	          </Col>
 	        </Row>
 	      </Form>
+	      {this.state.userFound
+	        ? (
+	        <div>{this.state.foundUser.username} <Button type='submit' data-user={this.state.foundUser._id} onClick={this.onClick} >Add Friend</Button></div>
+	      )
+	        : (
+	        ''
+	      )}
 	    </>
 	  )
-	}
+    }
 }
 export default withRouter(AddFriends)
