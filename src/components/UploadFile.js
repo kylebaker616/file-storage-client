@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import { uploadFile } from '../api/files'
 import { FormData } from 'formdata-node'
 
-function UploadFile () {
+function UploadFile (props) {
   const [selected, setSelected] = useState({})
   const [upload, setUpload] = useState({})
   const [loading, setLoading] = useState(false)
@@ -22,7 +22,7 @@ function UploadFile () {
     // upload is the key that the api is expecting, value is the selected file set in state
     data.set('upload', selected)
     console.log(data, 'ooo')
-    uploadFile(data)
+    uploadFile(data, props.user)
       .then(res => setUpload(res.data.uploadDoc))
       .then(() => setLoading(false))
       .catch(console.error + 'oops')

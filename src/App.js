@@ -11,17 +11,24 @@ import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
 import UploadFile from './components/UploadFile'
+import Uploads from './components/Uploads'
+import AddFriends from './components/Friends/AddFriends'
+import Requests from './components/Friends/Requests'
+import MyFriends from './components/Friends/MyFriends'
+// import FriendProfile from './components/Friends/FriendProfile'
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
       user: null,
-      msgAlerts: []
+      msgAlerts: [],
+      friends: ''
     }
   }
 
   setUser = (user) => this.setState({ user })
+  setFriends = (friends) => this.setState({ friends })
 
   clearUser = () => this.setState({ user: null })
 
@@ -87,10 +94,48 @@ class App extends Component {
               <ChangePassword msgAlert={this.msgAlert} user={user} />
             )}
           />
-          <Route
-            exact path='/upload'
-            render={() => (<UploadFile/>)}
+          <AuthenticatedRoute
+            exact
+            path='/upload'
+            user={user}
+            render={() => <UploadFile msgAlert={this.msgAlert} user={user} />}
           />
+          <AuthenticatedRoute
+            exact
+            path='/uploads'
+            user={user}
+            render={() => <Uploads msgAlert={this.msgAlert} user={user} />}
+          />
+          <AuthenticatedRoute
+            path='/add'
+            user={user}
+            render={() => <AddFriends msgAlert={this.msgAlert} user={user} />}
+          />
+          <AuthenticatedRoute
+            path='/requests'
+            user={user}
+            render={() => (
+              <Requests
+                msgAlert={this.msgAlert}
+                user={user}
+                setUser={this.setUser}
+              />
+            )}
+          />
+          <AuthenticatedRoute
+            path='/friends'
+            user={user}
+            render={() => (
+              <MyFriends user={user} setFriends={this.setFriends} />
+            )}
+          />
+          {/* <Route
+            path='/friendprofile'
+            user={user}
+            render={() => (
+              <FriendProfile user={user} friend={this.friends} />
+            )}
+          /> */}
         </main>
       </Fragment>
     )
