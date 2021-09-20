@@ -11,6 +11,21 @@ export const uploadFile = (fileData, user) => {
     }
   })
 }
+export const pinFile = (upload, user) => {
+  return axios({
+    url: apiUrl + '/pins',
+    method: 'POST',
+    data: {
+      upload: {
+        url: upload.url,
+        mimetype: upload.mimetype
+      }
+    },
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }
+  })
+}
 export const showUploads = (user) => {
   return axios({
     url: apiUrl + '/uploads',

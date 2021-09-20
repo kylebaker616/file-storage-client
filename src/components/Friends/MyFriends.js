@@ -3,8 +3,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { findRequester } from '../../api/friends'
-import { showFriendUploads } from '../../api/files'
-import fileDownload from 'js-file-download'
+import { showFriendUploads, pinFile } from '../../api/files'
+// import fileDownload from 'js-file-download'
 import { Button, Card } from 'react-bootstrap'
 
 // import AuthenticatedRoute from '.././AuthenticatedRoute/AuthenticatedRoute'
@@ -16,7 +16,8 @@ class Requests extends Component {
     this.state = {
       friends: '',
       viewFriend: '',
-      uploads: []
+      uploads: [],
+      friendFound: false
     }
   }
 
@@ -51,17 +52,20 @@ class Requests extends Component {
     showFriendUploads(this.state.viewFriend).then((response) => {
       console.log(response)
       this.setState({
-        uploads: response.data.uploads
+        uploads: response.data.uploads,
+        friendFound: true
       })
     })
   }
 
   render () {
-	  const { friends } = this.state
+	  const { friends, friendFound } = this.state
 	  let friendsJsx
 	  if (friends.length === 0) {
 	    friendsJsx = 'No friends'
-	  } else {
+	  } else if (friendFound === true) {
+      friendsJsx = ''
+    } else {
 	    friendsJsx = friends.map((friend) => (
 	      <div key={friend.id}>
 	        {friend.data.user.username}
@@ -99,12 +103,12 @@ class Requests extends Component {
     })
     // This is what prevents the "cannot read property map of undefined" or other similar errors because on the first render, `movies` state will be `null`
     if (uploads === null) {
-      return 'Loading...'
+      return ''
     }
 
     let uploadsJsx
     if (uploads.length === 0) {
-      uploadsJsx = 'Loading...'
+      uploadsJsx = ''
     } else {
       uploadsJsx = uploads.map((upload) => (
         <Card
@@ -126,25 +130,26 @@ class Requests extends Component {
                 const win = window.open(upload.url, '_blank')
                 win.focus()
               }}>
-								Download file
+							Download file
             </Button>
             <Button
+              variant='success'
+              onClick={() => {
+                pinFile(upload, this.props.user)
+                  .then(console.log('this file be pinned'))
+              }}>
+							Pin file
+            </Button>
+            {/* <Button
               variant='danger'
               onClick={() => {
                 fileDownload(upload.url)
               }}>
 								Download file
-            </Button>
-            <a href={upload.url} download={upload.url}>
+            </Button> */}
+            {/* <a href={upload.url} download={upload.url}>
 								Down
-            </a>
-            <Button
-              variant='danger'
-              data-id={upload._id}
-              data-key={upload.key}
-              onClick={this.handleClick}>
-								Delete file
-            </Button>
+            </a> */}
           </Card.Body>
         </Card>
       ))
@@ -152,7 +157,7 @@ class Requests extends Component {
 	  return (
       <div>
         {friendsJsx}
-        <div style={cardContainerLayout}>{uploadsJsx}AAA</div>
+        <div style={cardContainerLayout}>{uploadsJsx}</div>
       </div>
     )
   }
