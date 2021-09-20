@@ -30,3 +30,9 @@ export const deleteFile = (id, key, user) => {
     }
   })
 }
+export const showFriendUploads = (id) => {
+  return axios({
+    url: apiUrl + '/frienduploads/' + id,
+    method: 'GET'
+  })
+}

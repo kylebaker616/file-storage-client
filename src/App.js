@@ -14,17 +14,21 @@ import UploadFile from './components/UploadFile'
 import Uploads from './components/Uploads'
 import AddFriends from './components/Friends/AddFriends'
 import Requests from './components/Friends/Requests'
+import MyFriends from './components/Friends/MyFriends'
+// import FriendProfile from './components/Friends/FriendProfile'
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
       user: null,
-      msgAlerts: []
+      msgAlerts: [],
+      friends: ''
     }
   }
 
   setUser = (user) => this.setState({ user })
+  setFriends = (friends) => this.setState({ friends })
 
   clearUser = () => this.setState({ user: null })
 
@@ -110,8 +114,28 @@ class App extends Component {
           <AuthenticatedRoute
             path='/requests'
             user={user}
-            render={() => <Requests msgAlert={this.msgAlert} user={user} setUser={this.setUser} />}
+            render={() => (
+              <Requests
+                msgAlert={this.msgAlert}
+                user={user}
+                setUser={this.setUser}
+              />
+            )}
           />
+          <AuthenticatedRoute
+            path='/friends'
+            user={user}
+            render={() => (
+              <MyFriends user={user} setFriends={this.setFriends} />
+            )}
+          />
+          {/* <Route
+            path='/friendprofile'
+            user={user}
+            render={() => (
+              <FriendProfile user={user} friend={this.friends} />
+            )}
+          /> */}
         </main>
       </Fragment>
     )
