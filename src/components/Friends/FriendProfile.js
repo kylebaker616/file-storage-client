@@ -79,10 +79,18 @@ class FriendProfile extends Component {
 	    ) {
 	      upload.thumbnail = upload.url
 	      upload.folder = 'images'
+	    } else if (upload.mimetype === 'application/pdf') {
+	      upload.thumbnail =
+					'https://cdn.pixabay.com/photo/2018/05/08/18/46/pdf-3383632_1280.png'
+	      upload.folder = 'pdf'
+	    } else if (upload.mimetype === 'audio/wav') {
+	      upload.thumbnail =
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCAarv1DhZSLjDF_-f30f5cmkKWLAq0_Ox2A&usqp=CAU'
+	      upload.folder = 'audio'
 	    } else {
 	      upload.thumbnail =
 					'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'
-	      upload.folder = 'files'
+	      upload.folder = 'other'
 	    }
 	  })
 	  // This is what prevents the "cannot read property map of undefined" or other similar errors because on the first render, `movies` state will be `null`

@@ -63,6 +63,13 @@ class AddFriends extends Component {
       console.log(wantedFriend)
       addFriend(wantedFriend, this.props.user)
         .then(res => console.log(res))
+        .then(() => {
+          this.props.msgAlert({
+	        heading: 'Request sent',
+	        message: 'Friend request sent',
+	        variant: 'success'
+	      })
+	    })
     }
 
     render () {
