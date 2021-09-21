@@ -77,6 +77,7 @@ class Requests extends Component {
 	          >
 	           View Uploads
 	        </Button>
+          <hr></hr>
 	      </div>
 	    ))
 	  }
@@ -122,7 +123,7 @@ class Requests extends Component {
             height='161'
           />
           <Card.Body>
-            <Card.Title>{upload.createdAt}</Card.Title>
+            <Card.Title>Folder: {upload.folder}</Card.Title>
 
             <Button
               variant='success'
