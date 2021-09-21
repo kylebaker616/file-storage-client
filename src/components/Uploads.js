@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { showUploads, deleteFile } from '../api/files'
 import { withRouter } from 'react-router-dom'
 import { Button, Card } from 'react-bootstrap'
-import fileDownload from 'js-file-download'
+// import fileDownload from 'js-file-download'
 
 class Uploads extends Component {
   constructor (props) {
@@ -77,10 +77,18 @@ class Uploads extends Component {
 	    ) {
 	      upload.thumbnail = upload.url
 	      upload.folder = 'images'
+	    } else if (upload.mimetype === 'application/pdf') {
+	      upload.thumbnail =
+					'https://cdn.pixabay.com/photo/2018/05/08/18/46/pdf-3383632_1280.png'
+	      upload.folder = 'pdf'
+	    } else if (upload.mimetype === 'audio/wav') {
+	      upload.thumbnail =
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCAarv1DhZSLjDF_-f30f5cmkKWLAq0_Ox2A&usqp=CAU'
+	      upload.folder = 'audio'
 	    } else {
 	      upload.thumbnail =
-					'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'
-	      upload.folder = 'files'
+				'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'
+	      upload.folder = 'other'
 	    }
 	  })
 	  // This is what prevents the "cannot read property map of undefined" or other similar errors because on the first render, `movies` state will be `null`
@@ -104,22 +112,24 @@ class Uploads extends Component {
 	          height='161'
 	        />
 	        <Card.Body>
-	          <Card.Title>{upload.createdAt}</Card.Title>
+	          <Card.Title>Folder: {upload.folder}</Card.Title>
 
-	          <Button variant='success' onClick={() => {
-	            const win = window.open(upload.url, '_blank')
-	            win.focus()
-	          }}>
+	          <Button
+	            variant='success'
+	            onClick={() => {
+	              const win = window.open(upload.url, '_blank')
+	              win.focus()
+	            }}>
 							Download file
 	          </Button>
-	          <Button
+	          {/* <Button
 	            variant='danger'
 	            onClick={() => {
 	              fileDownload(upload.url)
 	            }}>
 							Download file
 	          </Button>
-	          <a href={upload.url} download={upload.url}>Down</a>
+	          <a href={upload.url} download={upload.url}>Down</a> */}
 	          <Button
 	            variant='danger'
 	            data-id={upload._id}
