@@ -15,7 +15,7 @@ import Uploads from './components/Uploads'
 import AddFriends from './components/Friends/AddFriends'
 import Requests from './components/Friends/Requests'
 import MyFriends from './components/Friends/MyFriends'
-// import FriendProfile from './components/Friends/FriendProfile'
+import Home from './components/Home'
 
 class App extends Component {
   constructor (props) {
@@ -129,13 +129,14 @@ class App extends Component {
               <MyFriends user={user} setFriends={this.setFriends} />
             )}
           />
-          {/* <Route
-            path='/friendprofile'
+          <Route
+            exact
+            path='/'
             user={user}
             render={() => (
-              <FriendProfile user={user} friend={this.friends} />
+              <Home />
             )}
-          /> */}
+          />
         </main>
       </Fragment>
     )
